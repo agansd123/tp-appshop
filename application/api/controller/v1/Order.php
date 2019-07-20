@@ -10,10 +10,14 @@
 
 namespace app\api\controller\v1;
 
-
-use think\Controller;
-
-class Order extends Controller
+class Order extends BaseController
 {
-    
+    protected $beforeActionList = [
+        'checkExclusiveScope' => ['only' => 'placeorder'] //方法名称不可使用大写,字母对应即可
+    ];
+
+
+    public function placeOrder(){
+
+    }
 }

@@ -27,4 +27,6 @@ Route::group('api/:version/product',function (){
 
 Route::post('api/:version/token/user','api/:version.Token/getToken');  //获取token
 
-Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress');  //获取token
+Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress');  //填写收货地址
+
+Route::post('api/:version/order','api/:version.Order/placeOrder');  //下单
