@@ -10,6 +10,6 @@
 
 //调用示例： $c = config('setting.img_prefix');
 return [
-    'img_prefix' => 'http://z.cn/static/images',
+    'img_prefix' => 'http://love.cn/static/images',
     'token_expire_in' => 7200
 ];
