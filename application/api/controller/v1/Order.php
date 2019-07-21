@@ -11,7 +11,7 @@
 namespace app\api\controller\v1;
 
 use app\api\validate\OrderPlace;
-
+use app\api\service\Token as TokenService;
 class Order extends BaseController
 {
     protected $beforeActionList = [
@@ -21,6 +21,8 @@ class Order extends BaseController
 
     public function placeOrder(){
         (new OrderPlace())->goCheck();
-        return 1;
+        $product = input('post.products/a');
+        $uid = TokenService::getCurrentTokenVar('uid');
+
     }
 }
