@@ -20,10 +20,6 @@ use app\lib\exception\UserException;
 class Address extends BaseController
 {
 
-    protected $beforeActionList = [
-        'checkPrimaryScope' => ['only' => 'createorupdateaddress'] //方法名称不可使用大写,字母对应即可
-    ];
-
 
     /**
      * 新增或者更新会员地址信息

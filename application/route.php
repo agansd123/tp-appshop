@@ -25,8 +25,15 @@ Route::group('api/:version/product',function (){
     Route::get('/:id','api/:version.Product/getOne',[],['id'=>'\d+']);  //获取商品详情
 });
 
-Route::post('api/:version/token/user','api/:version.Token/getToken');  //获取token
+Route::post('api/:version/token/user','api/:version.Token/getToken');  //获取普通会员token
 
-Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress');  //填写收货地址
+//需要权限的路由
+Route::group('api/:version',function (){
+    Route::post('/address','api/:version.Address/createOrUpdateAddress');  //填写收货地址
+    Route::post('/order','api/:version.Order/placeOrder');  //下单
+},['before_behavior'=>'\app\api\behavior\NeedPrimaryScope']);
 
-Route::post('api/:version/order','api/:version.Order/placeOrder');  //下单
+
+
+
+

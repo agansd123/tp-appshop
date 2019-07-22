@@ -66,43 +66,4 @@ class Token
     }
 
 
-    /**
-     * 需要用户和管理员都可以访问的权限
-     * @return bool
-     * @throws Exception
-     * @throws ForbiddenException
-     * @throws TokenGetException
-     */
-    public static function needPrimaryScope(){
-        $scope = self::getCurrentTokenVar('scope');
-        if ($scope){
-            if ($scope>= ScopeEnum::User){
-                return true;
-            }else{
-                throw new ForbiddenException();
-            }
-        }else{
-            throw new TokenGetException();
-        }
-    }
-
-    /**
-     * 只有用户可以访问的权限
-     * @return bool
-     * @throws ForbiddenException
-     * @throws TokenGetException
-     * @throws \think\Exception
-     */
-    public static function needExclusiveScope(){
-        $scope = self::getCurrentTokenVar('scope');
-        if ($scope){
-            if ($scope == ScopeEnum::User){
-                return true;
-            }else{
-                throw new ForbiddenException();
-            }
-        }else{
-            throw new TokenGetException();
-        }
-    }
 }

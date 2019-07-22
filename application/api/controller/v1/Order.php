@@ -16,10 +16,6 @@ use app\api\service\Order as OrderService;
 
 class Order extends BaseController
 {
-    protected $beforeActionList = [
-        'checkExclusiveScope' => ['only' => 'placeorder'] //方法名称不可使用大写,字母对应即可
-    ];
-
 
     public function placeOrder(){
         (new OrderPlace())->goCheck();
