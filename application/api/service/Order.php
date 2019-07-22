@@ -17,6 +17,7 @@ use app\api\model\UserAddress as UserAddressModel;
 use app\api\model\Order as OrderModel;
 use app\lib\exception\OrderException;
 use app\lib\exception\UserException;
+use think\Db;
 use think\Exception;
 
 class Order
@@ -51,6 +52,7 @@ class Order
      * @throws Exception
      */
     private function createOrder($snap){
+        Db::startTrans();
         try{
             $orderNo = self::makeOrderNo();
             $order = new OrderModel();
@@ -72,7 +74,7 @@ class Order
             }
             $orderProduct = new OrderProductModel();
             $orderProduct->saveAll($this->oProducts);
-
+            Db::commit();
             return [
                 'order_no' => $orderNo,
                 'order_id' => $orderID,
@@ -80,6 +82,7 @@ class Order
                 'create_time' => $create_time
             ];
         }catch (Exception $exception){
+            Db::rollback();
             throw $exception;
         }
     }
