@@ -220,6 +220,13 @@ class Order
         return $products;
     }
 
-
+    /**
+     * @param $address
+     * @return mixed
+     */
+    public static function getSnapAddress($address){
+        $address = json_decode($address,true);
+        return $address;
+    }
 
 }

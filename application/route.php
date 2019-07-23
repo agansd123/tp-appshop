@@ -38,6 +38,15 @@ Route::post('api/:version/order','api/:version.Order/placeOrder',[
     'before_behavior'=>'\app\api\behavior\NeedPrimaryScope'
 ]);
 
+//获取订单列表
+Route::get('api/:version/order_list','api/:version.Order/getSummaryByUser',[
+    'before_behavior'=>'\app\api\behavior\NeedPrimaryScope'
+]);
+
+//获取订单详情
+Route::get('api/:version/order/:id','api/:version.Order/getDetail',[
+    'before_behavior'=>'\app\api\behavior\NeedPrimaryScope'
+],['id' =>'\d+']);
 
 //获取预支付订单
 Route::post('api/:version//pay/pre_order','api/:version.Pay/getPreOrder',[
