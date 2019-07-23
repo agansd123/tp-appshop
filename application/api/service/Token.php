@@ -65,5 +65,20 @@ class Token
         return $uid;
     }
 
+    /**
+     * 检测是否当前用户操作
+     */
+    public static function isValidOperate($checkedUID){
+        if (!$checkedUID){
+            throw new Exception('检测UID时必须传入一个被检测UID');
+        }
+
+        $currentOperateUID = self::getCurrentUid();
+        if ($currentOperateUID == $checkedUID){
+            return true;
+        }
+
+        return false;
+    }
 
 }

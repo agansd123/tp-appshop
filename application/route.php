@@ -11,27 +11,47 @@
 
 use think\Route;
 
-//模块名，控制器名，方法名
-Route::get('api/:version/banner/:id','api/:version.Banner/getBanner'); //获取Banner
+Route::group('api/:version',function (){
+    Route::post('/token/user','api/:version.Token/getToken');  //获取普通会员token
+    Route::post('/pay/notify','api/:version.Pay/receiveNotify');  //处理微信支付回调业务
+    Route::get('/banner/:id','api/:version.Banner/getBanner'); //获取Banner
+    Route::get('/theme','api/:version.Theme/getTList');  //获取专题
+    Route::get('/theme/:id','api/:version.Theme/getComplexOne');  //获取专题详情
+    Route::get('/category/all','api/:version.Category/getAllCategories');  //分类
 
-Route::get('api/:version/theme','api/:version.Theme/getTList');  //获取专题
-Route::get('api/:version/theme/:id','api/:version.Theme/getComplexOne');  //获取专题详情
+    Route::group('/product',function (){
+        Route::get('/recent','api/:version.Product/getRecent');  //最近新品
+        Route::get('/by_category','api/:version.Product/getAllInCategory');  //分类商品
+        Route::get('/:id','api/:version.Product/getOne',[],['id'=>'\d+']);  //获取商品详情
+    });
 
-Route::get('api/:version/category/all','api/:version.Category/getAllCategories');  //分类
-
-Route::group('api/:version/product',function (){
-    Route::get('/recent','api/:version.Product/getRecent');  //最近新品
-    Route::get('/by_category','api/:version.Product/getAllInCategory');  //分类商品
-    Route::get('/:id','api/:version.Product/getOne',[],['id'=>'\d+']);  //获取商品详情
 });
 
-Route::post('api/:version/token/user','api/:version.Token/getToken');  //获取普通会员token
 
-//需要权限的路由
-Route::group('api/:version',function (){
-    Route::post('/address','api/:version.Address/createOrUpdateAddress');  //填写收货地址
-    Route::post('/order','api/:version.Order/placeOrder');  //下单
-},['before_behavior'=>'\app\api\behavior\NeedPrimaryScope']);
+//填写收货地址
+Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress',[
+    'before_behavior'=>'\app\api\behavior\NeedPrimaryScope'
+]);
+
+//下单
+Route::post('api/:version/order','api/:version.Order/placeOrder',[
+    'before_behavior'=>'\app\api\behavior\NeedPrimaryScope'
+]);
+
+
+//获取预支付订单
+Route::post('api/:version//pay/pre_order','api/:version.Pay/getPreOrder',[
+    'before_behavior'=>'\app\api\behavior\NeedExclusiveScope'
+]);
+
+
+
+
+
+
+
+
+
 
 
 

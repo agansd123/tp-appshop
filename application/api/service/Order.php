@@ -162,6 +162,19 @@ class Order
         return $status;
     }
 
+    /**
+     * 库存量检测
+     * @param $orderID
+     * @return array
+     */
+    public function checkOrderStock($orderID){
+        $oProducts = OrderProductModel::where('order_id','=',$orderID)->select();
+        $this->oProducts = $oProducts;
+        $this->products = $this->getProductsByOrder($oProducts);
+        $status = $this->getOrderStatus();
+        return $status;
+    }
+
     private function getProductStatus($oPID,$oCount,$products){
         $pIndex = -1;
 
@@ -206,5 +219,7 @@ class Order
 
         return $products;
     }
+
+
 
 }
